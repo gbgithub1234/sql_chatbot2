@@ -17,8 +17,8 @@ import plotly.express as px
 import pandas as pd
 
 
-OPENAI_API_KEY='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'
-db_string='mysql+pymysql://u848738634_gbuser1:8DfU%#7gNbFf$U-@31.170.160.103:3306/u848738634_aitest1'
+OPENAI_API_KEY=st.secrets["OPENAI_API_KEY"]
+db_string=st.secrets["DB_STRING"]
 
 openai.api_key = OPENAI_API_KEY
 
