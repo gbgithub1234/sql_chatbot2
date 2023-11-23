@@ -3,3 +3,4 @@ pinecone-client
 streamlit_chat
 pymysql
 openai==0.25.0
+mysql.connector
