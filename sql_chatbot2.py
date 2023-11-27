@@ -1,14 +1,3 @@
-#------------------------------------------
-# source:
-# Build Your Own Sql Chatbot with Langchain and Streamlit
-# https://ofeng.org/posts/langchain-streamlit-build-your-own-sql-chat/
-
-from langchain.sql_database import SQLDatabase
-from langchain.llms import OpenAI
-from langchain.agents import AgentType, initialize_agent, load_tools
-from langchain.callbacks import StreamlitCallbackHandler
-from langchain.agents import create_sql_agent
-from langchain.agents.agent_toolkits import SQLDatabaseToolkit
 import streamlit as st
 import openai
 # import mysql.connector
