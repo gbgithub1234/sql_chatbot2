@@ -11,10 +11,10 @@ from langchain.agents import create_sql_agent
 from langchain.agents.agent_toolkits import SQLDatabaseToolkit
 import streamlit as st
 import openai
-import mysql.connector
+# import mysql.connector
 
-import plotly.express as px
-import pandas as pd
+# import plotly.express as px
+# import pandas as pd
 
 
 OPENAI_API_KEY=st.secrets["OPENAI_API_KEY"]
