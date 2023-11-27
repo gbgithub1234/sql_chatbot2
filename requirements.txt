@@ -1,3 +1,3 @@
 streamlit_chat
 pymysql
-openai
+openai==0.25.0
