@@ -161,17 +161,17 @@ if prompt := st.chat_input():
 
 
     #--------------------------------
-    messages.append(
-        {"role": "user", "content": multiline_str1 + prompt},
-    )
+    # messages.append(
+    #     {"role": "user", "content": multiline_str1 + prompt},
+    # )
 
-    chat = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo", messages=messages
-    )
+    # chat = openai.ChatCompletion.create(
+    #     model="gpt-3.5-turbo", messages=messages
+    # )
 
-    reply = chat.choices[0].message.content
-    # print(f"ChatGPT: {reply}")
-    print(f"<<<{reply}>>>")
+    # reply = chat.choices[0].message.content
+    # # print(f"ChatGPT: {reply}")
+    # print(f"<<<{reply}>>>")
     # --------------------------------
 
 
@@ -188,7 +188,7 @@ if prompt := st.chat_input():
 
         with cnx.cursor() as cursor:
 
-            # result = cursor.execute("SELECT * FROM orders")
+            reply = cursor.execute("SELECT * FROM orders limit 10")
 
 
 
