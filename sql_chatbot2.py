@@ -17,8 +17,7 @@ openai.api_key = OPENAI_API_KEY
 #------------------------------------------
 
 
-    engine = sqlalchemy.create_engine(db_string),
-    )
+engine = sqlalchemy.create_engine(db_string)
 
 
 #-------------------------------------------
