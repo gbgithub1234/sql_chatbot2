@@ -2,6 +2,9 @@ import streamlit as st
 import openai
 # import mysql.connector
 
+import sqlalchemy
+from sqlalchemy import create_engine
+
 # import plotly.express as px
 # import pandas as pd
 
@@ -14,7 +17,8 @@ openai.api_key = OPENAI_API_KEY
 #------------------------------------------
 
 
-
+    engine = sqlalchemy.create_engine(db_string),
+    )
 
 
 #-------------------------------------------
