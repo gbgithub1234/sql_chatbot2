@@ -195,7 +195,7 @@ limit prose
 
 #------------------------------------------
 
-st.header("Table Output Report Generator 1.0 (beta)")
+st.header("AI-powered Report Generator (Tabular)")
 
 st.chat_input(placeholder="Enter your prompt here...")
 
