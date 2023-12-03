@@ -1,9 +1,10 @@
 import streamlit as st
 import openai
-# import mysql.connector
 
-# import sqlalchemy
-# from sqlalchemy import create_engine
+import sqlalchemy
+from sqlalchemy import create_engine,text
+
+# import mysql.connector
 
 # import plotly.express as px
 # import pandas as pd
@@ -20,14 +21,12 @@ openai.api_key = OPENAI_API_KEY
 #------------------------------------------
 #TESTING
 
-import sqlalchemy
 
-from sqlalchemy import create_engine,text
 
-my_conn = create_engine(db_string)
-my_conn = my_conn.connect()
-query = "SELECT * from products"
-my_data = list(my_conn.execute(text(query)))
+# my_conn = create_engine(db_string)
+# my_conn = my_conn.connect()
+# query = "SELECT * from products"
+# my_data = list(my_conn.execute(text(query)))
 
 # print(my_data)
 # st.write(my_data)
@@ -39,28 +38,28 @@ my_data = list(my_conn.execute(text(query)))
 
 
 # Store the result in a multidimensional array
-table_data = [list(row) for row in my_data]
+# table_data = [list(row) for row in my_data]
 
-# now that we have the data inside table_data, we can close the connection
-my_conn.close()
+# # now that we have the data inside table_data, we can close the connection
+# my_conn.close()
 
-data_length = len(table_data)
+# data_length = len(table_data)
 
-if data_length > 0:
+# if data_length > 0:
 
-    print("This is the array:")
-    for row in table_data:
-        print(row)
+#     print("This is the array:")
+#     for row in table_data:
+#         print(row)
 
-    #----------------------------------------------------
-    import plotly.figure_factory as ff
-    fig = ff.create_table(table_data, height_constant=60)
-    fig.layout.margin.update({'t': 50, 'b': 100})
-    st.plotly_chart(fig, use_container_width=True)
+#     #----------------------------------------------------
+#     import plotly.figure_factory as ff
+#     fig = ff.create_table(table_data, height_constant=60)
+#     fig.layout.margin.update({'t': 50, 'b': 100})
+#     st.plotly_chart(fig, use_container_width=True)
 
-else:
-    print("No results were found for that query.")
-    st.write("No results were found for that query.")
+# else:
+#     print("No results were found for that query.")
+#     st.write("No results were found for that query.")
 
 
 
@@ -218,109 +217,70 @@ if prompt := st.chat_input():
 
 
     #--------------------------------
-    # messages.append(
-    #     {"role": "user", "content": multiline_str1 + prompt},
-    # )
+    #OPENAI - translate prompt to SQL statement 
 
-    # chat = openai.ChatCompletion.create(
-    #     model="gpt-3.5-turbo", messages=messages
-    # )
+    messages.append(
+        {"role": "user", "content": multiline_str1 + prompt},
+    )
 
-    # reply = chat.choices[0].message.content
-    # # print(f"ChatGPT: {reply}")
-    # print(f"<<<{reply}>>>")
+    chat = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo", messages=messages
+    )
+
+    reply = chat.choices[0].message.content
+    # print(f"ChatGPT: {reply}")
+    print(f"<<<{reply}>>>")
     # --------------------------------
 
 
-    cnx = mysql.connector.connect(user='u848738634_gbuser1', password='8DfU%#7gNbFf$U-',
-                                  host='31.170.160.103',
-                                  database='u848738634_aitest1')
+    # --------------------------------------------
+    # SQL CONNECTION METHOD #2 - using SQLAlchemy which library we know is working with Streamlit
 
-    output = ""
-
-
-
-    if cnx and cnx.is_connected():
+    my_conn = create_engine(db_string)
+    my_conn = my_conn.connect()
 
 
-        with cnx.cursor() as cursor:
+    # reply = "SELECT productname, productcode FROM products limit 10"
 
-            reply = cursor.execute("SELECT * FROM orders limit 10")
+    my_data = list(my_conn.execute(text(reply)))
 
 
 
-            # reply = """
-            #
-            # SELECT qwe p.productLine, SUM(od.quantityOrdered) AS totalQuantitySold
-            # FROM products p
-            # JOIN orderdetails od ON p.productCode = od.productCode
-            # GROUP BY p.productLine
-            # ORDER BY totalQuantitySold DESC;
-            #
-            # """
+    # print(my_data)
+    # st.write(my_data)
+
+    # this proves that we've got the data from the database:
+    # for row in my_data:
+    #     print("username:", row.productName)
+    #     st.write("username:", row.productName)
 
 
-            st.write(reply)
+    # Store the result in a multidimensional array
+    table_data = [list(row) for row in my_data]
 
-            try:
-                result = cursor.execute(reply)
+    # now that we have the data inside table_data, we can close the connection
+    my_conn.close()
 
-            except:
-                print("some error happened")
-                st.write("Sorry, I was unable to generate results for this query. Please rephrase.")
+    data_length = len(table_data)
 
-            else:
-                rows = cursor.fetchall()
+    if data_length > 0:
 
+        print("This is the array:")
+        for row in table_data:
+            print(row)
 
-                # Store the result in a multidimensional array
-                table_data = [list(row) for row in rows]
-
-
-                cnx.close()
-
-                #----------------------------------------------------
-
-                data_length = len(table_data)
-
-                if data_length > 0:
-
-                    print("This is the array:")
-                    for row in table_data:
-                        print(row)
-
-                    #----------------------------------------------------
-
-                    import plotly.figure_factory as ff
-
-                    # table_data = [['Team', 'Wins', 'Losses', 'Ties', 'xxx'],
-                    #               ['Montréal<br>Canadiens', 18, 4, 0, 9],
-                    #               ['Dallas Stars', 18, 5, 0, 9],
-                    #               ['NY Rangers', 16, 5, 0, 9],
-                    #               ['Boston<br>Bruins', 13, 8, 0, 9],
-                    #               ['Chicago<br>Blackhawks', 13, 8, 0, 9],
-                    #               ['LA Kings', 13, 8, 0, 9],
-                    #               ['Ottawa<br>Senators', 12, 5, 0, 9]]
-
-                    fig = ff.create_table(table_data, height_constant=60)
-
-
-                    fig.layout.margin.update({'t': 50, 'b': 100})
-
-                    st.plotly_chart(fig, use_container_width=True)
-
-                else:
-                    print("No results were found for that query.")
-                    st.write("No results were found for that query.")
-
+        #----------------------------------------------------
+        import plotly.figure_factory as ff
+        fig = ff.create_table(table_data, height_constant=60)
+        fig.layout.margin.update({'t': 50, 'b': 100})
+        st.plotly_chart(fig, use_container_width=True)
 
     else:
+        print("No results were found for that query.")
+        st.write("No results were found for that query.")
 
 
-        print("Could not connect")
+
+    # --------------------------------------------
 
 
-    cnx.close()
-
-
-#------------------------------------------
