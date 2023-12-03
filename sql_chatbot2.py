@@ -2,8 +2,8 @@ import streamlit as st
 import openai
 # import mysql.connector
 
-import sqlalchemy
-from sqlalchemy import create_engine
+# import sqlalchemy
+# from sqlalchemy import create_engine
 
 # import plotly.express as px
 # import pandas as pd
@@ -20,38 +20,17 @@ openai.api_key = OPENAI_API_KEY
 #------------------------------------------
 #TESTING
 
-# IMPORT THE SQALCHEMY LIBRARY's CREATE_ENGINE METHOD
-# from sqlalchemy import create_engine
+import sqlalchemy
+from sqlalchemy import create_engine,text
 
-# DEFINE THE DATABASE CREDENTIALS
-user = 'u848738634_gbuser1'
-password = '8DfU%#7gNbFf$U-'
-host = '31.170.160.103'
-port = 3306
-database = 'u848738634_aitest1'
-
-
-# PYTHON FUNCTION TO CONNECT TO THE MYSQL DATABASE AND
-# RETURN THE SQLACHEMY ENGINE OBJECT
-def get_connection():
-    return create_engine(
-        url="mysql+pymysql://{0}:{1}@{2}:{3}/{4}".format(
-            user, password, host, port, database
-        )
-    )
+my_conn = create_engine(db_string)
+my_conn = my_conn.connect()
+query = "SELECT * from products"
+my_data = list(my_conn.execute(text(query)))
+print(my_data)
 
 
-if __name__ == '__main__':
-
-    try:
-
-        # GET THE CONNECTION OBJECT (ENGINE) FOR THE DATABASE
-        engine = get_connection()
-        print(
-            f"Connection to the {host} for user {user} created successfully.")
-    except Exception as ex:
-        print("Connection could not be made due to the following error: \n", ex)
-
+st.write(my_data)
 
 
 
