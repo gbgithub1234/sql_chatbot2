@@ -233,6 +233,8 @@ if prompt := st.chat_input():
     # --------------------------------
 
 
+
+
     # --------------------------------------------
     # SQL CONNECTION METHOD #2 - using SQLAlchemy which library we know is working with Streamlit
 
@@ -242,45 +244,59 @@ if prompt := st.chat_input():
 
     # reply = "SELECT productname, productcode FROM products limit 10"
 
-    my_data = list(my_conn.execute(text(reply)))
 
 
 
-    # print(my_data)
-    # st.write(my_data)
+    try:
+        my_data = list(my_conn.execute(text(reply)))
 
-    # this proves that we've got the data from the database:
-    # for row in my_data:
-    #     print("username:", row.productName)
-    #     st.write("username:", row.productName)
+    except:
+        print("some error happened")
+        st.write("Sorry, I was unable to generate results for this query. Please rephrase.")
 
-
-    # Store the result in a multidimensional array
-    table_data = [list(row) for row in my_data]
-
-    # now that we have the data inside table_data, we can close the connection
-    my_conn.close()
-
-    data_length = len(table_data)
-
-    if data_length > 0:
-
-        print("This is the array:")
-        for row in table_data:
-            print(row)
-
-        #----------------------------------------------------
-        import plotly.figure_factory as ff
-        fig = ff.create_table(table_data, height_constant=60)
-        fig.layout.margin.update({'t': 50, 'b': 100})
-        st.plotly_chart(fig, use_container_width=True)
+        my_conn.close()
 
     else:
-        print("No results were found for that query.")
-        st.write("No results were found for that query.")
+
+        st.write(reply)
+
+
+        # print(my_data)
+        # st.write(my_data)
+
+        # this proves that we've got the data from the database:
+        # for row in my_data:
+        #     print("username:", row.productName)
+        #     st.write("username:", row.productName)
+
+
+        # Store the result in a multidimensional array
+        table_data = [list(row) for row in my_data]
+
+        # now that we have the data inside table_data, we can close the connection
+        my_conn.close()
+
+        data_length = len(table_data)
+
+        if data_length > 0:
+
+            print("This is the array:")
+            for row in table_data:
+                print(row)
+
+            #----------------------------------------------------
+            import plotly.figure_factory as ff
+            fig = ff.create_table(table_data, height_constant=60)
+            fig.layout.margin.update({'t': 50, 'b': 100})
+            st.plotly_chart(fig, use_container_width=True)
+
+        else:
+            print("No results were found for that query.")
+            st.write("No results were found for that query.")
 
 
 
-    # --------------------------------------------
+        # --------------------------------------------
+
 
 
