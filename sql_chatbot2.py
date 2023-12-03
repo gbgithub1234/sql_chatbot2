@@ -21,16 +21,21 @@ openai.api_key = OPENAI_API_KEY
 #TESTING
 
 import sqlalchemy
+
 from sqlalchemy import create_engine,text
 
 my_conn = create_engine(db_string)
 my_conn = my_conn.connect()
 query = "SELECT * from products"
 my_data = list(my_conn.execute(text(query)))
-print(my_data)
 
+# print(my_data)
+# st.write(my_data)
 
-st.write(my_data)
+for row in my_data:
+    print("username:", row.productName)
+    st.write("username:", row.productName)
+
 
 
 
