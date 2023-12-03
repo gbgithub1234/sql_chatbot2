@@ -21,7 +21,7 @@ openai.api_key = OPENAI_API_KEY
 #------------------------------------------
 #TESTING
 
-
+st.set_page_config(layout="wide")
 
 # my_conn = create_engine(db_string)
 # my_conn = my_conn.connect()
