@@ -258,7 +258,8 @@ if prompt := st.chat_input():
 
     else:
 
-        st.write(reply)
+        with st.expander("Show/hide SQL"):
+            st.write(reply)
 
 
         # print(my_data)
