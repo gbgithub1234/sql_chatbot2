@@ -9,6 +9,17 @@ from sqlalchemy import create_engine,text
 # import plotly.express as px
 # import pandas as pd
 
+#----------------------------------------------------
+# Add custom CSS to hide the GitHub icon
+hide_github_icon = """
+#GithubIcon {
+  visibility: hidden;
+}
+"""
+st.markdown(hide_github_icon, unsafe_allow_html=True)
+
+#----------------------------------------------------
+
 
 OPENAI_API_KEY=st.secrets["OPENAI_API_KEY"]
 db_string=st.secrets["DB_STRING"]
