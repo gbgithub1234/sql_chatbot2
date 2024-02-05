@@ -199,7 +199,7 @@ limit prose
 
 st.header("AI-powered Report Generator (Tabular)")
 
-st.chat_input(placeholder="Enter your prompt here...")
+#st.chat_input(placeholder="Enter your prompt here...")
 
 #-------------------------------------------
 
@@ -260,7 +260,7 @@ if prompt := st.chat_input():
 
     else:
 
-        with st.expander("Show/hide SQL***"):
+        with st.expander("Show/hide SQL"):
             st.write(reply)
 
 
