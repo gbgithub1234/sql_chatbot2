@@ -205,7 +205,7 @@ st.header("AI-powered Report Generator (Tabular)")
 
 #--------------------------------------------
 
-if prompt := st.chat_input():
+if prompt := st.chat_input(placeholder="Enter your prompt here..."):
     st.chat_message("user").write(prompt)
 
     messages = [{"role": "system", "content":
