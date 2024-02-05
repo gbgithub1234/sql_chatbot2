@@ -150,7 +150,7 @@ if prompt := st.chat_input(placeholder="Enter your prompt here..."):
 
 
     #--------------------------------
-    #OPENAI - translate prompt to SQL statement 
+    #OPENAI - translate the user's prompt to SQL statement using model: chatGPT 3.5 model
 
     messages.append(
         {"role": "user", "content": multiline_str1 + prompt},
@@ -160,22 +160,24 @@ if prompt := st.chat_input(placeholder="Enter your prompt here..."):
         model="gpt-3.5-turbo", messages=messages
     )
 
+    #store the SQL response
     reply = chat.choices[0].message.content
 
+    #print the response to the terminal for debugging
     print(f"<<<{reply}>>>")
     # --------------------------------
 
 
     # --------------------------------------------
     # SQL CONNECTION METHOD using SQLAlchemy 
-
     my_conn = create_engine(db_string)
     my_conn = my_conn.connect()
 
-
+    #attempt at executing the SQL on the database
     try:
         my_data = list(my_conn.execute(text(reply)))
 
+    #if the SQL was unsuccessful for any reason
     except:
         print("some error happened")
         st.write("Sorry, I was unable to generate results for this query. Please rephrase.")
@@ -212,5 +214,5 @@ if prompt := st.chat_input(placeholder="Enter your prompt here..."):
             print("No results were found for that query.")
             st.write("No results were found for that query.")
 
-
+        my_conn.close()
 
