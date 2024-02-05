@@ -4,12 +4,6 @@ import openai
 import sqlalchemy
 from sqlalchemy import create_engine,text
 
-# import mysql.connector
-
-# import plotly.express as px
-# import pandas as pd
-
-
 
 
 OPENAI_API_KEY=st.secrets["OPENAI_API_KEY"]
@@ -17,65 +11,18 @@ db_string=st.secrets["DB_STRING"]
 
 openai.api_key = OPENAI_API_KEY
 
-#------------------------------------------
-# engine = sqlalchemy.create_engine(db_string)
-
-#------------------------------------------
-#TESTING
 
 st.set_page_config(layout="wide")
 
-# my_conn = create_engine(db_string)
-# my_conn = my_conn.connect()
-# query = "SELECT * from products"
-# my_data = list(my_conn.execute(text(query)))
-
-# print(my_data)
-# st.write(my_data)
-
-# this proves that we've got the data from the database:
-# for row in my_data:
-#     print("username:", row.productName)
-#     st.write("username:", row.productName)
-
-
-# Store the result in a multidimensional array
-# table_data = [list(row) for row in my_data]
-
-# # now that we have the data inside table_data, we can close the connection
-# my_conn.close()
-
-# data_length = len(table_data)
-
-# if data_length > 0:
-
-#     print("This is the array:")
-#     for row in table_data:
-#         print(row)
-
-#     #----------------------------------------------------
-#     import plotly.figure_factory as ff
-#     fig = ff.create_table(table_data, height_constant=60)
-#     fig.layout.margin.update({'t': 50, 'b': 100})
-#     st.plotly_chart(fig, use_container_width=True)
-
-# else:
-#     print("No results were found for that query.")
-#     st.write("No results were found for that query.")
-
-
-
-# --------------------------------------------
 
 
 
 
 
 
-#-------------------------------------------
 
 
-#-------------------------------------------
+
 
 multiline_str1 = """
 
@@ -203,8 +150,6 @@ st.header("AI-powered Report Generator (Tabular)")
 
 #-------------------------------------------
 
-#--------------------------------------------
-
 if prompt := st.chat_input(placeholder="Enter your prompt here..."):
     st.chat_message("user").write(prompt)
 
@@ -263,14 +208,6 @@ if prompt := st.chat_input(placeholder="Enter your prompt here..."):
         with st.expander("Show/hide SQL"):
             st.write(reply)
 
-
-        # print(my_data)
-        # st.write(my_data)
-
-        # this proves that we've got the data from the database:
-        # for row in my_data:
-        #     print("username:", row.productName)
-        #     st.write("username:", row.productName)
 
 
         # Store the result in a multidimensional array
