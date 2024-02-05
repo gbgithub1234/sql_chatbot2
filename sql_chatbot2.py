@@ -1,33 +1,27 @@
+#to output information to the screen
 import streamlit as st
+
+#to connect to the openai resource
 import openai
 
+#to facilitate SQL calls
 import sqlalchemy
 from sqlalchemy import create_engine,text
 
-
-
+#assign key info from Streamlit private variables
 OPENAI_API_KEY=st.secrets["OPENAI_API_KEY"]
+openai.api_key = OPENAI_API_KEY
 db_string=st.secrets["DB_STRING"]
 
-openai.api_key = OPENAI_API_KEY
-
-
+#make tha page width wide
 st.set_page_config(layout="wide")
 
 
-
-
-
-
-
-
-
-
-
+#------------------------------------------
+#provide prompt instructions as well as some sample database structure to draw on
 multiline_str1 = """
 
 given the following database table structure:
-
 
 /* Create the tables */
 CREATE TABLE productlines (
@@ -135,21 +129,13 @@ limit prose
 
 
 """
-
 #------------------------------------------
-# TESTING
-
-
-
-
-#------------------------------------------
-
+#provide heading:
 st.header("AI-powered Report Generator (Tabular)")
-
-#st.chat_input(placeholder="Enter your prompt here...")
 
 #-------------------------------------------
 
+#if there's a prompt then process it
 if prompt := st.chat_input(placeholder="Enter your prompt here..."):
     st.chat_message("user").write(prompt)
 
@@ -175,23 +161,16 @@ if prompt := st.chat_input(placeholder="Enter your prompt here..."):
     )
 
     reply = chat.choices[0].message.content
-    # print(f"ChatGPT: {reply}")
+
     print(f"<<<{reply}>>>")
     # --------------------------------
 
 
-
-
     # --------------------------------------------
-    # SQL CONNECTION METHOD #2 - using SQLAlchemy which library we know is working with Streamlit
+    # SQL CONNECTION METHOD using SQLAlchemy 
 
     my_conn = create_engine(db_string)
     my_conn = my_conn.connect()
-
-
-    # reply = "SELECT productname, productcode FROM products limit 10"
-
-
 
 
     try:
@@ -207,7 +186,6 @@ if prompt := st.chat_input(placeholder="Enter your prompt here..."):
 
         with st.expander("Show/hide SQL"):
             st.write(reply)
-
 
 
         # Store the result in a multidimensional array
@@ -233,10 +211,6 @@ if prompt := st.chat_input(placeholder="Enter your prompt here..."):
         else:
             print("No results were found for that query.")
             st.write("No results were found for that query.")
-
-
-
-        # --------------------------------------------
 
 
 
