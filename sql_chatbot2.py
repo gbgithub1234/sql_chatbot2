@@ -210,7 +210,7 @@ if prompt := st.chat_input(placeholder="Enter your prompt here..."):
                 print(row)
 
             #----------------------------------------------------
-            
+            #create and display the table from the returned SQL results
             fig = ff.create_table(table_data, height_constant=60)
             fig.layout.margin.update({'t': 50, 'b': 100})
             st.plotly_chart(fig, use_container_width=True)
