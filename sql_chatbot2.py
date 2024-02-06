@@ -8,6 +8,9 @@ import openai
 import sqlalchemy
 from sqlalchemy import create_engine,text
 
+#to facilitate diplaying of tabular data
+import plotly.figure_factory as ff
+
 #assign key info from Streamlit private variables
 OPENAI_API_KEY=st.secrets["OPENAI_API_KEY"]
 openai.api_key = OPENAI_API_KEY
@@ -182,30 +185,32 @@ if prompt := st.chat_input(placeholder="Enter your prompt here..."):
         print("some error happened")
         st.write("Sorry, I was unable to generate results for this query. Please rephrase.")
 
+        #close the database connection
         my_conn.close()
 
     else:
 
+        #provide the option to show/hide the SQL statement 
         with st.expander("Show/hide SQL"):
             st.write(reply)
-
 
         # Store the result in a multidimensional array
         table_data = [list(row) for row in my_data]
 
-        # now that we have the data inside table_data, we can close the connection
+        #now that we have the data inside table_data, we can close the connection
         my_conn.close()
 
         data_length = len(table_data)
 
         if data_length > 0:
 
+            #display results in terminal for debugging purposes
             print("This is the array:")
             for row in table_data:
                 print(row)
 
             #----------------------------------------------------
-            import plotly.figure_factory as ff
+            
             fig = ff.create_table(table_data, height_constant=60)
             fig.layout.margin.update({'t': 50, 'b': 100})
             st.plotly_chart(fig, use_container_width=True)
